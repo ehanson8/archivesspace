@@ -5,6 +5,7 @@ gem "factory_bot"
 gem "rufus-lru"
 gem "net-http-persistent"
 gem "multipart-post"
+gem 'concurrent-ruby', '1.1.4'
 
 group :development do
   gem 'mocha'

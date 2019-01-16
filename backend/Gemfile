@@ -48,7 +48,7 @@ gem "multipart-post", "1.2.0"
 gem 'multi_json', '~> 1.13.1'
 gem "rjack-jackson", "1.8.11.0"
 
-
+gem 'concurrent-ruby', '1.1.4'
 gem 'rubyzip', '~> 1.2.2'
 gem "zip-zip", "0.3"
 
