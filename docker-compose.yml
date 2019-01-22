@@ -16,13 +16,6 @@ services:
       # disable the embedded solr
       APPCONFIG_ENABLE_SOLR: 'false'
       APPCONFIG_SOLR_URL: 'http://solr:8983/solr/archivesspace'
-      APPCONFIG_FRONTEND_PROXY_URL: 'http://localhost:8888/staff/'
-      APPCONFIG_OAI_PROXY_URL: 'http://localhost:8888/oai'
-      APPCONFIG_PUBLIC_PROXY_URL: 'http://localhost:8888/'
-      # testing plugin initialization on startup
-      ASPACE_INITIALIZE_PLUGINS: 'newrelic'
-    volumes:
-      - ./plugins/newrelic:/archivesspace/plugins/newrelic
   db:
     image: mysql:5.7
     command: --character-set-server=utf8 --collation-server=utf8_unicode_ci --innodb_buffer_pool_size=2G --innodb_buffer_pool_instances=2
@@ -33,6 +26,9 @@ services:
       MYSQL_DATABASE: archivesspace
       MYSQL_USER: as
       MYSQL_PASSWORD: as123
+    volumes:
+      - ./archivesspace.sql:/docker-entrypoint-initdb.d/archivesspace.sql
+  # Only needed for external solr
   solr:
     build:
       context: ./solr
@@ -40,10 +36,3 @@ services:
     command: solr-create -p 8983 -c archivesspace -d /archivesspace
     ports:
       - "8983:8983"
-  web:
-    build:
-      context: ./proxy
-    ports:
-      - "8888:80"
-    depends_on:
-      - app
